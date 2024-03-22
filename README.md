@@ -1,2 +1,6 @@
-# uacc
-Unique ANSI C Compiler
+# Unique ANSI C Compiler
+
+## License
+
+See LICENSE file for the license information.
+
