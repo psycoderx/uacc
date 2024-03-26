@@ -6,9 +6,6 @@
 /*----------------------------------------------------------*/
 
 #include "uacc.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 /*----------------------------------------------------------*/
 /* DEFINES                                                  */
@@ -33,6 +30,20 @@ static void
 print_help(void);
 
 /*----------------------------------------------------------*/
+/* VARIABLES                                                */
+/*----------------------------------------------------------*/
+
+/*
+The actual location of global variables.
+*/
+static Globals static_G;
+
+/*
+Vector to global variables.
+*/
+Globals *G = &static_G;
+
+/*----------------------------------------------------------*/
 /* IMPLEMENTATION                                           */
 /*----------------------------------------------------------*/
 
@@ -41,11 +52,21 @@ int
 main(int argc, char *argv[])
 {
   int i = 0;
+  const char *fnull_name = "/dev/null";
   /**/
   if (argc < 2) {
     print_help();  
     exit(EXIT_SUCCESS);
   }
+  /**/
+  G->fnull = fopen(fnull_name, "wb");
+  if (G->fnull == NULL) {
+    fprintf(stderr, "%s%s%s%s",
+      fnull_name, ": ", strerror(errno), "\n"
+    );
+    exit(EXIT_FAILURE);
+  }
+  /**/
   for (i = 1; i < argc; i++) {
     if (strcmp(argv[i], "--help") == 0) {
       print_help();  

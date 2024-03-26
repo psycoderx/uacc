@@ -13,7 +13,7 @@ LD = gcc
 
 UACC_EXE = uacc
 
-C_FILES = uacc.c
+C_FILES = uacc.c uacc_lib.c
 
 H_FILES = uacc.h
 
@@ -35,7 +35,7 @@ rm_o_files:
 	rm -f $(O_FILES)
 
 $(UACC_EXE): $(O_FILES)
-	$(LD) -o $@ $<
+	$(LD) -o $@ $(O_FILES)
 
 %.o: %.c $(H_FILES)
 	$(CC) $(CC_WARNS) -o $@ -c $<
